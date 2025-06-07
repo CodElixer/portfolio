@@ -10,8 +10,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/portfolio-website-geometry' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/portfolio-website-geometry/' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/portfolio' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/portfolio/' : '',
 }
 
 export default nextConfig
