@@ -1,0 +1,724 @@
+"use client"
+
+import { useState, useEffect, Suspense } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronRight, Code, ExternalLink, Github, Mail, Menu, Moon, Sun, X } from "lucide-react"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
+import dynamic from "next/dynamic"
+import { TypingAnimation } from "./components/typing-animation"
+
+// Dynamically import the GeometryBackground component with no SSR
+const GeometryBackground = dynamic(() => import("@/components/geometry-background"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-background" />
+})
+
+export default function Portfolio() {
+  const [activeSection, setActiveSection] = useState("home")
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // Sections for navigation
+  const sections = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "skills", label: "Skills" },
+    { id: "projects", label: "Projects" },
+    { id: "contact", label: "Contact" },
+  ]
+
+  // Handle scroll and set active section
+  useEffect(() => {
+    setMounted(true)
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+
+      const sectionElements = sections.map((section) => ({
+        id: section.id,
+        offset: document.getElementById(section.id)?.offsetTop || 0,
+      }))
+
+      for (let i = sectionElements.length - 1; i >= 0; i--) {
+        if (scrollPosition >= sectionElements[i].offset - 200) {
+          setActiveSection(sectionElements[i].id)
+          break
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Animation variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 },
+    },
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      {/* Geometry Background */}
+      <div className="fixed inset-0 z-0 opacity-70 dark:opacity-40">
+        <GeometryBackground />
+      </div>
+
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2"
+          >
+            <Code className="h-6 w-6 text-primary" />
+            <span className="font-bold text-xl">
+              <span className="text-primary">Dev</span>Portfolio
+            </span>
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            {sections.map((section) => (
+              <motion.a
+                key={section.id}
+                href={`#${section.id}`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  activeSection === section.id ? "text-primary" : "text-muted-foreground"
+                }`}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: sections.indexOf(section) * 0.1 }}
+              >
+                {section.label}
+              </motion.a>
+            ))}
+
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle theme"
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              </Button>
+            )}
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="flex items-center gap-2 md:hidden">
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle theme"
+              >
+                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              </Button>
+            )}
+
+            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md md:hidden"
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed inset-y-0 right-0 w-3/4 bg-background border-l p-6 flex flex-col"
+            >
+              <div className="flex justify-end">
+                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+
+              <nav className="flex flex-col gap-4 mt-8">
+                {sections.map((section) => (
+                  <motion.a
+                    key={section.id}
+                    href={`#${section.id}`}
+                    className={`text-lg font-medium transition-colors hover:text-primary ${
+                      activeSection === section.id ? "text-primary" : "text-muted-foreground"
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {section.label}
+                  </motion.a>
+                ))}
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <section id="home" className="min-h-screen flex items-center pt-16">
+          <div className="container mx-auto px-4 py-12 md:py-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
+                <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                  <span className="block">Hi, I'm</span>
+                  <span className="text-primary block mt-2">
+                    <TypingAnimation 
+                      text="Yashkirti Raj"
+                      speed={100}
+                      delay={500}
+                      cursorWidth={3}
+                      cursorHeight={48}
+                    />
+                  </span>
+                </h1>
+                <p className="text-xl md:text-2xl text-muted-foreground mb-6">
+                  Frontend Developer & UI/UX Enthusiast
+                </p>
+                <p className="text-muted-foreground mb-8 max-w-md">
+                  I build exceptional digital experiences that are fast, accessible, and visually appealing.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Button asChild>
+                    <a href="#contact">
+                      Get in Touch <ChevronRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <a href="#projects">View My Work</a>
+                  </Button>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden border shadow-xl backdrop-blur-sm bg-background/30">
+                  <Image
+                    src="/placeholder.svg?height=500&width=500"
+                    alt="Yashkirti Raj"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-4 rounded-lg shadow-lg"
+                >
+                  <p className="font-bold">5+ Years Experience</p>
+                  <p className="text-sm">in Frontend Development</p>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-16 md:py-24 bg-muted/30 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
+              <div className="w-20 h-1 bg-primary mx-auto"></div>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative aspect-square max-w-md mx-auto"
+              >
+                <div className="absolute inset-0 border-2 border-primary rounded-lg transform translate-x-4 translate-y-4"></div>
+                <div className="relative w-full h-full rounded-lg overflow-hidden border backdrop-blur-sm bg-background/30">
+                  <Image
+                    src="/placeholder.svg?height=400&width=400"
+                    alt="About Yashkirti Raj"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={staggerContainer}
+              >
+                <motion.h3 variants={fadeIn} className="text-2xl font-bold mb-4">
+                  My Journey
+                </motion.h3>
+
+                <motion.p variants={fadeIn} className="text-muted-foreground mb-4">
+                  I'm a passionate Frontend Developer with 5+ years of experience creating beautiful, functional, and
+                  user-centered digital experiences. I am always looking to learn new technologies and stay on top of
+                  the latest trends.
+                </motion.p>
+
+                <motion.p variants={fadeIn} className="text-muted-foreground mb-6">
+                  With a background in both design and development, I bring a unique perspective to every project. I
+                  believe in clean code, thoughtful interactions, and experiences that delight users.
+                </motion.p>
+
+                <motion.div variants={fadeIn} className="grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <h4 className="font-bold">Name:</h4>
+                    <p className="text-muted-foreground">Yashkirti Raj</p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold">Email:</h4>
+                    <p className="text-muted-foreground">yashkirtiraj10@gmail.com</p>
+                  </div>
+                  <div>
+                    <h4 className="font-bold">Availability:</h4>
+                    <p className="text-muted-foreground">Freelance / Full-time</p>
+                  </div>
+                  {/* <div>
+                    <h4 className="font-bold">Location:</h4>
+                    <p className="text-muted-foreground">San Francisco, CA</p>
+                  </div> */}
+                  <div>
+                    <motion.div variants={fadeIn}>
+                  <Button asChild>
+                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                      Download Resume <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                </motion.div>
+                  </div>
+                </motion.div>
+
+                {/* <motion.div variants={fadeIn}>
+                  <Button asChild>
+                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                      Download Resume <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                </motion.div> */}
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section id="skills" className="py-16 md:py-24 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
+              <div className="w-20 h-1 bg-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                I've worked with a variety of technologies in the web development world. Here are my main areas of
+                expertise:
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {[
+                {
+                  title: "Frontend Development",
+                  skills: ["React", "Next.js", "Vue.js", "TypeScript", "Tailwind CSS"],
+                },
+                {
+                  title: "UI/UX Design",
+                  skills: ["Figma", "Adobe XD", "User Research", "Wireframing", "Prototyping"],
+                },
+                { title: "Backend Knowledge", skills: ["Node.js", "Express", "RESTful APIs", "GraphQL", "Firebase"] },
+                { title: "Tools & Methods", skills: ["Git", "GitHub", "CI/CD", "Agile", "Jest"] },
+                { title: "Performance", skills: ["Web Vitals", "Lighthouse", "Optimization", "SEO", "Analytics"] },
+                {
+                  title: "Soft Skills",
+                  skills: ["Communication", "Teamwork", "Problem Solving", "Time Management", "Adaptability"],
+                },
+              ].map((category, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeIn}
+                  className="bg-card/80 hover:bg-card/90 backdrop-blur-sm border rounded-lg p-6 transition-all hover:shadow-lg"
+                  whileHover={{ y: -5 }}
+                >
+                  <h3 className="text-xl font-bold mb-4">{category.title}</h3>
+                  <ul className="space-y-2">
+                    {category.skills.map((skill, skillIndex) => (
+                      <li key={skillIndex} className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-primary"></div>
+                        <span>{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-16 md:py-24 bg-muted/30 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
+              <div className="w-20 h-1 bg-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                Here are some of my recent projects. Each project is unique and showcases different skills and
+                technologies.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {[
+                {
+                  title: "E-Commerce Platform",
+                  description: "A full-featured online store with cart, checkout, and payment integration.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["React", "Next.js", "Stripe", "Tailwind CSS"],
+                },
+                {
+                  title: "Portfolio Website",
+                  description: "A modern portfolio website for a digital artist with gallery and contact form.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["Vue.js", "GSAP", "Firebase", "Responsive Design"],
+                },
+                {
+                  title: "Task Management App",
+                  description: "A productivity app with drag-and-drop interface and real-time updates.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["React", "TypeScript", "Redux", "Node.js"],
+                },
+                {
+                  title: "Travel Blog",
+                  description: "A content-focused blog with rich media support and commenting system.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["Next.js", "CMS", "Responsive", "SEO Optimized"],
+                },
+                {
+                  title: "Fitness Tracker",
+                  description: "A mobile-first web app for tracking workouts and nutrition with data visualization.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["React Native", "Chart.js", "API Integration"],
+                },
+                {
+                  title: "Real Estate Platform",
+                  description: "Property listing website with search, filtering, and map integration.",
+                  image: "/placeholder.svg?height=300&width=400",
+                  tags: ["Next.js", "Google Maps API", "Filtering", "Authentication"],
+                },
+              ].map((project, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeIn}
+                  className="bg-card/80 backdrop-blur-sm border rounded-lg overflow-hidden transition-all hover:shadow-xl group"
+                  whileHover={{ y: -10 }}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <ExternalLink className="h-5 w-5" />
+                      </Button>
+                      <Button size="icon" variant="secondary" className="rounded-full">
+                        <Github className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                    <p className="text-muted-foreground mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, tagIndex) => (
+                        <span key={tagIndex} className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              viewport={{ once: true }}
+              className="text-center mt-12"
+            >
+              <Button variant="outline" asChild>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                  View More on GitHub <Github className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-16 md:py-24 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+              <div className="w-20 h-1 bg-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                Have a project in mind or want to discuss potential opportunities? Feel free to reach out!
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full text-primary">
+                      <Mail className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Email</h4>
+                      <p className="text-muted-foreground">yashkirtiraj10@gmail.com</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full text-primary">
+                      <Github className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">GitHub</h4>
+                      <p className="text-muted-foreground">github.com/codelixer</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-full text-primary">
+                      <Code className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Website</h4>
+                      <p className="text-muted-foreground">yashcodex.com</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <h3 className="text-2xl font-bold mb-4">Follow Me</h3>
+                  <div className="flex gap-4">
+                    {["twitter", "linkedin", "dribbble", "instagram"].map((platform) => (
+                      <a
+                        key={platform}
+                        href={`https://${platform}.com`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-card/80 hover:bg-primary text-muted-foreground hover:text-primary-foreground p-3 rounded-full transition-colors"
+                      >
+                        <span className="sr-only">{platform}</span>
+                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="bg-card/80 backdrop-blur-sm border rounded-lg p-6 md:p-8"
+              >
+                <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
+
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="text-sm font-medium">
+                        Name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        placeholder="Your name"
+                        className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="text-sm font-medium">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        placeholder="Your email"
+                        className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="subject" className="text-sm font-medium">
+                      Subject
+                    </label>
+                    <input
+                      id="subject"
+                      type="text"
+                      placeholder="Subject"
+                      className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      placeholder="Your message"
+                      rows={5}
+                      className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    ></textarea>
+                  </div>
+
+                  <Button type="submit" className="w-full">
+                    Send Message
+                  </Button>
+                </form>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="py-8 border-t backdrop-blur-sm bg-background/50 relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Code className="h-6 w-6 text-primary" />
+              <span className="font-bold text-xl">
+                <span className="text-primary">Dev</span>Portfolio
+              </span>
+            </div>
+
+            <p className="text-muted-foreground mb-6">
+              Creating exceptional digital experiences through code and design.
+            </p>
+
+            <div className="flex justify-center gap-6 mb-6">
+              {sections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {section.label}
+                </a>
+              ))}
+            </div>
+
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Yashkirti Raj. All rights reserved.
+            </p>
+          </motion.div>
+        </div>
+      </footer>
+    </div>
+  )
+}
