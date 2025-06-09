@@ -7,7 +7,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
-import { TypingAnimation } from "./components/typing-animation"
+import { TypingAnimation } from "@/components/typing-animation"
 
 // Dynamically import the GeometryBackground component with no SSR
 const GeometryBackground = dynamic(() => import("@/components/geometry-background"), {
