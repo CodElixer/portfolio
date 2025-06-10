@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npx serve@latest out",
     "lint": "next lint"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
     "@radix-ui/react-slot": "1.1.1",
+    "@stagewise/toolbar-next": "^0.4.5",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
