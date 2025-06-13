@@ -2,12 +2,13 @@
 
 import { useState, useEffect, Suspense } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, Code, ExternalLink, Github, Mail, Menu, Moon, Sun, X } from "lucide-react"
+import { ChevronRight, Code, ExternalLink, Github, Mail, Menu, Moon, Sun, X, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 import { TypingAnimation } from "@/components/typing-animation"
+import { siteConfig } from "@/config/site"
 
 // Dynamically import the GeometryBackground component with no SSR
 const GeometryBackground = dynamic(() => import("@/components/geometry-background"), {
@@ -20,15 +21,7 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-
-  // Sections for navigation
-  const sections = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
-  ]
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
   // Handle scroll and set active section
   useEffect(() => {
@@ -36,8 +29,11 @@ export default function Portfolio() {
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY
+      
+      // Show scroll to top button when scrolled down 300px
+      setShowScrollTop(scrollPosition > 300)
 
-      const sectionElements = sections.map((section) => ({
+      const sectionElements = siteConfig.navigation.map((section) => ({
         id: section.id,
         offset: document.getElementById(section.id)?.offsetTop || 0,
       }))
@@ -53,6 +49,14 @@ export default function Portfolio() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
 
   // Animation variants
   const fadeIn = {
@@ -98,7 +102,7 @@ export default function Portfolio() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {sections.map((section) => (
+            {siteConfig.navigation.map((section) => (
               <motion.a
                 key={section.id}
                 href={`#${section.id}`}
@@ -107,7 +111,7 @@ export default function Portfolio() {
                 }`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: sections.indexOf(section) * 0.1 }}
+                transition={{ duration: 0.5, delay: siteConfig.navigation.indexOf(section) * 0.1 }}
               >
                 {section.label}
               </motion.a>
@@ -171,7 +175,7 @@ export default function Portfolio() {
               </div>
 
               <nav className="flex flex-col gap-4 mt-8">
-                {sections.map((section) => (
+                {siteConfig.navigation.map((section) => (
                   <motion.a
                     key={section.id}
                     href={`#${section.id}`}
@@ -191,6 +195,24 @@ export default function Portfolio() {
         )}
       </AnimatePresence>
 
+      {/* Scroll to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+            whileHover={{ y: -5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ArrowUp className="h-6 w-6" />
+            <span className="sr-only">Scroll to top</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
       <main className="relative z-10">
         {/* Hero Section */}
         <section id="home" className="min-h-screen flex items-center pt-16">
@@ -201,7 +223,7 @@ export default function Portfolio() {
                   <span className="block">Hi, I'm</span>
                   <span className="text-primary block mt-2">
                     <TypingAnimation 
-                      text="Yashkirti Raj"
+                      text={siteConfig.name}
                       speed={100}
                       delay={500}
                       cursorWidth={3}
@@ -210,10 +232,10 @@ export default function Portfolio() {
                   </span>
                 </h1>
                 <p className="text-xl md:text-2xl text-muted-foreground mb-6">
-                  Frontend Developer & UI/UX Enthusiast
+                  {siteConfig.title}
                 </p>
                 <p className="text-muted-foreground mb-8 max-w-md">
-                  I build exceptional digital experiences that are fast, accessible, and visually appealing.
+                  {siteConfig.description}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Button asChild>
@@ -237,7 +259,7 @@ export default function Portfolio() {
                 <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden border shadow-xl backdrop-blur-sm bg-background/30">
                   <Image
                     src="/placeholder.svg?height=500&width=500"
-                    alt="Yashkirti Raj"
+                    alt={siteConfig.name}
                     fill
                     className="object-cover"
                     priority
@@ -252,8 +274,8 @@ export default function Portfolio() {
                   viewport={{ once: true }}
                   className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-4 rounded-lg shadow-lg"
                 >
-                  <p className="font-bold">5+ Years Experience</p>
-                  <p className="text-sm">in Frontend Development</p>
+                  <p className="font-bold">{siteConfig.experience}</p>
+                  <p className="text-sm">{siteConfig.experienceDescription}</p>
                 </motion.div>
               </motion.div>
             </div>
@@ -286,7 +308,7 @@ export default function Portfolio() {
                 <div className="relative w-full h-full rounded-lg overflow-hidden border backdrop-blur-sm bg-background/30">
                   <Image
                     src="/placeholder.svg?height=400&width=400"
-                    alt="About Yashkirti Raj"
+                    alt={`About ${siteConfig.name}`}
                     fill
                     className="object-cover"
                   />
@@ -303,52 +325,35 @@ export default function Portfolio() {
                   My Journey
                 </motion.h3>
 
-                <motion.p variants={fadeIn} className="text-muted-foreground mb-4">
-                  I'm a passionate Frontend Developer with 5+ years of experience creating beautiful, functional, and
-                  user-centered digital experiences. I am always looking to learn new technologies and stay on top of
-                  the latest trends.
-                </motion.p>
-
-                <motion.p variants={fadeIn} className="text-muted-foreground mb-6">
-                  With a background in both design and development, I bring a unique perspective to every project. I
-                  believe in clean code, thoughtful interactions, and experiences that delight users.
-                </motion.p>
+                {siteConfig.about.journey.map((paragraph, index) => (
+                  <motion.p key={index} variants={fadeIn} className="text-muted-foreground mb-4">
+                    {paragraph}
+                  </motion.p>
+                ))}
 
                 <motion.div variants={fadeIn} className="grid grid-cols-2 gap-4 mb-6">
                   <div>
                     <h4 className="font-bold">Name:</h4>
-                    <p className="text-muted-foreground">Yashkirti Raj</p>
+                    <p className="text-muted-foreground">{siteConfig.about.personalInfo.name}</p>
                   </div>
                   <div>
                     <h4 className="font-bold">Email:</h4>
-                    <p className="text-muted-foreground">yashkirtiraj10@gmail.com</p>
+                    <p className="text-muted-foreground">{siteConfig.about.personalInfo.email}</p>
                   </div>
                   <div>
                     <h4 className="font-bold">Availability:</h4>
-                    <p className="text-muted-foreground">Freelance / Full-time</p>
+                    <p className="text-muted-foreground">{siteConfig.about.personalInfo.availability}</p>
                   </div>
-                  {/* <div>
-                    <h4 className="font-bold">Location:</h4>
-                    <p className="text-muted-foreground">San Francisco, CA</p>
-                  </div> */}
                   <div>
                     <motion.div variants={fadeIn}>
-                  <Button asChild>
-                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                      Download Resume <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                </motion.div>
+                      <Button asChild>
+                        <a href={siteConfig.about.personalInfo.resume} target="_blank" rel="noopener noreferrer">
+                          Download Resume <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </motion.div>
                   </div>
                 </motion.div>
-
-                {/* <motion.div variants={fadeIn}>
-                  <Button asChild>
-                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                      Download Resume <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                </motion.div> */}
               </motion.div>
             </div>
           </div>
@@ -379,23 +384,7 @@ export default function Portfolio() {
               variants={staggerContainer}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {[
-                {
-                  title: "Frontend Development",
-                  skills: ["React", "Next.js", "Vue.js", "TypeScript", "Tailwind CSS"],
-                },
-                {
-                  title: "UI/UX Design",
-                  skills: ["Figma", "Adobe XD", "User Research", "Wireframing", "Prototyping"],
-                },
-                { title: "Backend Knowledge", skills: ["Node.js", "Express", "RESTful APIs", "GraphQL", "Firebase"] },
-                { title: "Tools & Methods", skills: ["Git", "GitHub", "CI/CD", "Agile", "Jest"] },
-                { title: "Performance", skills: ["Web Vitals", "Lighthouse", "Optimization", "SEO", "Analytics"] },
-                {
-                  title: "Soft Skills",
-                  skills: ["Communication", "Teamwork", "Problem Solving", "Time Management", "Adaptability"],
-                },
-              ].map((category, index) => (
+              {siteConfig.skills.map((category, index) => (
                 <motion.div
                   key={index}
                   variants={fadeIn}
@@ -442,44 +431,7 @@ export default function Portfolio() {
               variants={staggerContainer}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
-              {[
-                {
-                  title: "E-Commerce Platform",
-                  description: "A full-featured online store with cart, checkout, and payment integration.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["React", "Next.js", "Stripe", "Tailwind CSS"],
-                },
-                {
-                  title: "Portfolio Website",
-                  description: "A modern portfolio website for a digital artist with gallery and contact form.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["Vue.js", "GSAP", "Firebase", "Responsive Design"],
-                },
-                {
-                  title: "Task Management App",
-                  description: "A productivity app with drag-and-drop interface and real-time updates.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["React", "TypeScript", "Redux", "Node.js"],
-                },
-                {
-                  title: "Travel Blog",
-                  description: "A content-focused blog with rich media support and commenting system.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["Next.js", "CMS", "Responsive", "SEO Optimized"],
-                },
-                {
-                  title: "Fitness Tracker",
-                  description: "A mobile-first web app for tracking workouts and nutrition with data visualization.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["React Native", "Chart.js", "API Integration"],
-                },
-                {
-                  title: "Real Estate Platform",
-                  description: "Property listing website with search, filtering, and map integration.",
-                  image: "/placeholder.svg?height=300&width=400",
-                  tags: ["Next.js", "Google Maps API", "Filtering", "Authentication"],
-                },
-              ].map((project, index) => (
+              {siteConfig.projects.map((project, index) => (
                 <motion.div
                   key={index}
                   variants={fadeIn}
@@ -488,17 +440,21 @@ export default function Portfolio() {
                 >
                   <div className="relative h-48 overflow-hidden">
                     <Image
-                      src={project.image || "/placeholder.svg"}
+                      src={project.image}
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                      <Button size="icon" variant="secondary" className="rounded-full">
-                        <ExternalLink className="h-5 w-5" />
+                      <Button size="icon" variant="secondary" className="rounded-full" asChild>
+                        <a href={project.links.live} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-5 w-5" />
+                        </a>
                       </Button>
-                      <Button size="icon" variant="secondary" className="rounded-full">
-                        <Github className="h-5 w-5" />
+                      <Button size="icon" variant="secondary" className="rounded-full" asChild>
+                        <a href={project.links.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-5 w-5" />
+                        </a>
                       </Button>
                     </div>
                   </div>
@@ -567,7 +523,7 @@ export default function Portfolio() {
                     </div>
                     <div>
                       <h4 className="font-bold">Email</h4>
-                      <p className="text-muted-foreground">yashkirtiraj10@gmail.com</p>
+                      <p className="text-muted-foreground">{siteConfig.contact.email}</p>
                     </div>
                   </div>
 
@@ -577,7 +533,7 @@ export default function Portfolio() {
                     </div>
                     <div>
                       <h4 className="font-bold">GitHub</h4>
-                      <p className="text-muted-foreground">github.com/codelixer</p>
+                      <p className="text-muted-foreground">{siteConfig.contact.github}</p>
                     </div>
                   </div>
 
@@ -587,7 +543,7 @@ export default function Portfolio() {
                     </div>
                     <div>
                       <h4 className="font-bold">Website</h4>
-                      <p className="text-muted-foreground">yashcodex.com</p>
+                      <p className="text-muted-foreground">{siteConfig.contact.website}</p>
                     </div>
                   </div>
                 </div>
@@ -595,10 +551,10 @@ export default function Portfolio() {
                 <div className="mt-8">
                   <h3 className="text-2xl font-bold mb-4">Follow Me</h3>
                   <div className="flex gap-4">
-                    {["twitter", "linkedin", "dribbble", "instagram"].map((platform) => (
+                    {Object.entries(siteConfig.contact.socialLinks).map(([platform, url]) => (
                       <a
                         key={platform}
-                        href={`https://${platform}.com`}
+                        href={url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="bg-card/80 hover:bg-primary text-muted-foreground hover:text-primary-foreground p-3 rounded-full transition-colors"
@@ -699,11 +655,11 @@ export default function Portfolio() {
             </div>
 
             <p className="text-muted-foreground mb-6">
-              Creating exceptional digital experiences through code and design.
+              {siteConfig.footer.description}
             </p>
 
             <div className="flex justify-center gap-6 mb-6">
-              {sections.map((section) => (
+              {siteConfig.navigation.map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
@@ -715,7 +671,7 @@ export default function Portfolio() {
             </div>
 
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Yashkirti Raj. All rights reserved.
+              {siteConfig.footer.copyright}
             </p>
           </motion.div>
         </div>
