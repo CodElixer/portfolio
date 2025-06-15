@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 import { TypingAnimation } from "@/components/typing-animation"
-import { siteConfig } from "@/config/site"
-import { siteStrings } from "@/config/site-strings"
 import { IconMap } from "@/components/ui/iconMap"
+import { LanguageSwitcher } from "@/components/language-switcher"
+import { useLanguage } from "@/contexts/language-context"
 
 // Dynamically import the GeometryBackground component with no SSR
 const GeometryBackground = dynamic(() => import("@/components/geometry-background"), {
@@ -24,6 +24,7 @@ export default function Portfolio() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const { language, setLanguage, siteConfig, siteStrings } = useLanguage()
 
   // Handle scroll and set active section
   useEffect(() => {
@@ -118,6 +119,8 @@ export default function Portfolio() {
                 {section.label}
               </motion.a>
             ))}
+
+            <LanguageSwitcher currentLanguage={language} onLanguageChange={setLanguage} />
 
             {mounted && (
               <Button
