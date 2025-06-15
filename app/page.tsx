@@ -9,6 +9,7 @@ import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 import { TypingAnimation } from "@/components/typing-animation"
 import { siteConfig } from "@/config/site"
+import { siteStrings } from "@/config/site-strings"
 import { IconMap } from "@/components/ui/iconMap"
 
 // Dynamically import the GeometryBackground component with no SSR
@@ -97,7 +98,7 @@ export default function Portfolio() {
           >
             <Code className="h-6 w-6 text-primary" />
             <span className="font-bold text-xl">
-              <span className="text-primary">Dev</span>Portfolio
+              <span className="text-primary">{siteStrings.header.logo.prefix}</span>{siteStrings.header.logo.suffix}
             </span>
           </motion.div>
 
@@ -146,7 +147,7 @@ export default function Portfolio() {
               </Button>
             )}
 
-            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
+            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(true)} aria-label={siteStrings.accessibility.openMenu}>
               <Menu className="h-6 w-6" />
             </Button>
           </div>
@@ -170,7 +171,7 @@ export default function Portfolio() {
               className="fixed inset-y-0 right-0 w-3/4 bg-background border-l p-6 flex flex-col"
             >
               <div className="flex justify-end">
-                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} aria-label={siteStrings.accessibility.closeMenu}>
                   <X className="h-6 w-6" />
                 </Button>
               </div>
@@ -209,7 +210,7 @@ export default function Portfolio() {
             whileTap={{ scale: 0.95 }}
           >
             <ArrowUp className="h-6 w-6" />
-            <span className="sr-only">Scroll to top</span>
+            <span className="sr-only">{siteStrings.accessibility.scrollToTop}</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -221,7 +222,7 @@ export default function Portfolio() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
                 <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                  <span className="block">Hi, I'm</span>
+                  <span className="block">{siteStrings.hero.greeting}</span>
                   <span className="text-primary block mt-2">
                     <TypingAnimation 
                       text={siteConfig.name}
@@ -241,11 +242,11 @@ export default function Portfolio() {
                 <div className="flex flex-wrap gap-4">
                   <Button asChild>
                     <a href="#contact">
-                      Get in Touch <ChevronRight className="ml-2 h-4 w-4" />
+                      {siteStrings.hero.getInTouch} <ChevronRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                   <Button variant="outline" asChild>
-                    <a href="#projects">View My Work</a>
+                    <a href="#projects">{siteStrings.hero.viewWork}</a>
                   </Button>
                 </div>
               </motion.div>
@@ -293,7 +294,7 @@ export default function Portfolio() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{siteStrings.about.title}</h2>
               <div className="w-20 h-1 bg-primary mx-auto"></div>
             </motion.div>
 
@@ -323,7 +324,7 @@ export default function Portfolio() {
                 variants={staggerContainer}
               >
                 <motion.h3 variants={fadeIn} className="text-2xl font-bold mb-4">
-                  My Journey
+                  {siteStrings.about.journey.title}
                 </motion.h3>
 
                 {siteConfig.about.journey.map((paragraph, index) => (
@@ -334,15 +335,15 @@ export default function Portfolio() {
 
                 <motion.div variants={fadeIn} className="grid grid-cols-2 gap-4 mb-6">
                   <div>
-                    <h4 className="font-bold">Name:</h4>
+                    <h4 className="font-bold">{siteStrings.about.personalInfo.name}</h4>
                     <p className="text-muted-foreground">{siteConfig.about.personalInfo.name}</p>
                   </div>
                   <div>
-                    <h4 className="font-bold">Email:</h4>
+                    <h4 className="font-bold">{siteStrings.about.personalInfo.email}</h4>
                     <p className="text-muted-foreground">{siteConfig.about.personalInfo.email}</p>
                   </div>
                   <div>
-                    <h4 className="font-bold">Availability:</h4>
+                    <h4 className="font-bold">{siteStrings.about.personalInfo.availability}</h4>
                     <p className="text-muted-foreground">{siteConfig.about.personalInfo.availability}</p>
                   </div>
                   <div>
@@ -354,7 +355,7 @@ export default function Portfolio() {
                           target="_blank" 
                           rel="noopener noreferrer"
                         >
-                          Download Resume <ExternalLink className="ml-2 h-4 w-4" />
+                          {siteStrings.about.personalInfo.downloadResume} <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>
                     </motion.div>
@@ -375,11 +376,10 @@ export default function Portfolio() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{siteStrings.skills.title}</h2>
               <div className="w-20 h-1 bg-primary mx-auto"></div>
               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                I've worked with a variety of technologies in the web development world. Here are my main areas of
-                expertise:
+                {siteStrings.skills.description}
               </p>
             </motion.div>
 
@@ -422,11 +422,10 @@ export default function Portfolio() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{siteStrings.projects.title}</h2>
               <div className="w-20 h-1 bg-primary mx-auto"></div>
               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                Here are some of my recent projects. Each project is unique and showcases different skills and
-                technologies.
+                {siteStrings.projects.description}
               </p>
             </motion.div>
 
@@ -489,7 +488,7 @@ export default function Portfolio() {
             >
               <Button variant="outline" asChild>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                  View More on GitHub <Github className="ml-2 h-4 w-4" />
+                  {siteStrings.projects.viewMore} <Github className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </motion.div>
@@ -506,10 +505,10 @@ export default function Portfolio() {
               variants={fadeIn}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{siteStrings.contact.title}</h2>
               <div className="w-20 h-1 bg-primary mx-auto"></div>
               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                Have a project in mind or want to discuss potential opportunities? Feel free to reach out!
+                {siteStrings.contact.description}
               </p>
             </motion.div>
 
@@ -520,7 +519,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+                <h3 className="text-2xl font-bold mb-6">{siteStrings.contact.info.title}</h3>
 
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
@@ -528,7 +527,7 @@ export default function Portfolio() {
                       <Mail className="h-6 w-6" />
                     </div>
                     <div>
-                      <h4 className="font-bold">Email</h4>
+                      <h4 className="font-bold">{siteStrings.contact.info.email}</h4>
                       <p className="text-muted-foreground">{siteConfig.contact.email}</p>
                     </div>
                   </div>
@@ -538,7 +537,7 @@ export default function Portfolio() {
                       <Github className="h-6 w-6" />
                     </div>
                     <div>
-                      <h4 className="font-bold">GitHub</h4>
+                      <h4 className="font-bold">{siteStrings.contact.info.github}</h4>
                       <p className="text-muted-foreground">{siteConfig.contact.github}</p>
                     </div>
                   </div>
@@ -548,14 +547,14 @@ export default function Portfolio() {
                       <Code className="h-6 w-6" />
                     </div>
                     <div>
-                      <h4 className="font-bold">Website</h4>
+                      <h4 className="font-bold">{siteStrings.contact.info.website}</h4>
                       <p className="text-muted-foreground">{siteConfig.contact.website}</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-8">
-                  <h3 className="text-2xl font-bold mb-4">Follow Me</h3>
+                  <h3 className="text-2xl font-bold mb-4">{siteStrings.contact.followMe}</h3>
                   <div className="flex gap-4">
                     {Object.entries(siteConfig.contact.socialLinks).map(([platform, url]) => (
                       <a
@@ -582,29 +581,29 @@ export default function Portfolio() {
                 viewport={{ once: true }}
                 className="bg-card/80 backdrop-blur-sm border rounded-lg p-6 md:p-8"
               >
-                <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
+                <h3 className="text-2xl font-bold mb-6">{siteStrings.contact.messageForm.title}</h3>
 
                 <form className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="name" className="text-sm font-medium">
-                        Name
+                        {siteStrings.contact.messageForm.name.label}
                       </label>
                       <input
                         id="name"
                         type="text"
-                        placeholder="Your name"
+                        placeholder={siteStrings.contact.messageForm.name.placeholder}
                         className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="email" className="text-sm font-medium">
-                        Email
+                        {siteStrings.contact.messageForm.email.label}
                       </label>
                       <input
                         id="email"
                         type="email"
-                        placeholder="Your email"
+                        placeholder={siteStrings.contact.messageForm.email.placeholder}
                         className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
@@ -612,30 +611,30 @@ export default function Portfolio() {
 
                   <div className="space-y-2">
                     <label htmlFor="subject" className="text-sm font-medium">
-                      Subject
+                      {siteStrings.contact.messageForm.subject.label}
                     </label>
                     <input
                       id="subject"
                       type="text"
-                      placeholder="Subject"
+                      placeholder={siteStrings.contact.messageForm.subject.placeholder}
                       className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="message" className="text-sm font-medium">
-                      Message
+                      {siteStrings.contact.messageForm.message.label}
                     </label>
                     <textarea
                       id="message"
-                      placeholder="Your message"
+                      placeholder={siteStrings.contact.messageForm.message.placeholder}
                       rows={5}
                       className="w-full px-4 py-2 bg-background/80 backdrop-blur-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     ></textarea>
                   </div>
 
                   <Button type="submit" className="w-full">
-                    Send Message
+                    {siteStrings.contact.messageForm.submit}
                   </Button>
                 </form>
               </motion.div>
@@ -656,7 +655,7 @@ export default function Portfolio() {
             <div className="flex items-center justify-center gap-2 mb-4">
               <Code className="h-6 w-6 text-primary" />
               <span className="font-bold text-xl">
-                <span className="text-primary">Dev</span>Portfolio
+                <span className="text-primary">{siteStrings.header.logo.prefix}</span>{siteStrings.header.logo.suffix}
               </span>
             </div>
 
