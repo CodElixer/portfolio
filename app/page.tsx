@@ -348,7 +348,12 @@ export default function Portfolio() {
                   <div>
                     <motion.div variants={fadeIn}>
                       <Button asChild>
-                        <a href={siteConfig.about.personalInfo.resume} target="_blank" rel="noopener noreferrer">
+                        <a 
+                          href={siteConfig.about.personalInfo.resume.path} 
+                          download={siteConfig.about.personalInfo.resume.filename}
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
                           Download Resume <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>

@@ -15,7 +15,10 @@ export const siteConfig = {
       name: "Yashkirti Raj",
       email: "yashkirtiraj10@gmail.com",
       availability: "Freelance / Full-time",
-      resume: "/resume.pdf"
+      resume: {
+        path: "/assets/Resume.pdf",
+        filename: "Resume.pdf"
+      }
     }
   },
 
