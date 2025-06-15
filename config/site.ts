@@ -115,7 +115,7 @@ export const siteConfig = {
   contact: {
     email: "yashkirtiraj10@gmail.com",
     github: "github.com/codelixer",
-    website: "yashcodex.com",
+    website: "https://codelixer.github.io/portfolio/",
     socialLinks: {
       twitter: "https://twitter.com",
       linkedin: "https://linkedin.com",
@@ -136,6 +136,6 @@ export const siteConfig = {
   // Footer
   footer: {
     description: "Creating exceptional digital experiences through code and design.",
-    copyright: `© ${new Date().getFullYear()} Yashkirti Raj. All rights reserved.`
+    copyright: `© ${new Date().getFullYear() > 2025 ? `2025-${new Date().getFullYear()}` : 2025} Yashkirti Raj. All rights reserved.`
   }
 } 
