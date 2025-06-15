@@ -23,27 +23,63 @@ export const siteConfig = {
   skills: [
     {
       title: "Frontend Development",
-      skills: ["React", "Next.js", "Vue.js", "TypeScript", "Tailwind CSS"],
+      skills: [
+        { name: "React", icon: "code" },
+        { name: "Next.js", icon: "next" },
+        { name: "Vue.js", icon: "code" }, // Note: No specific Vue icon in Lucide
+        { name: "TypeScript", icon: "code" },
+        { name: "Tailwind CSS", icon: "palette" }
+      ],
     },
     {
       title: "UI/UX Design",
-      skills: ["Figma", "Adobe XD", "User Research", "Wireframing", "Prototyping"],
+      skills: [
+        { name: "Figma", icon: "pen-tool" },
+        { name: "Adobe XD", icon: "pen-tool" },
+        { name: "User Research", icon: "users" },
+        { name: "Wireframing", icon: "layout" },
+        { name: "Prototyping", icon: "box" }
+      ],
     },
     { 
       title: "Backend Knowledge", 
-      skills: ["Node.js", "Express", "RESTful APIs", "GraphQL", "Firebase"] 
+      skills: [
+        { name: "Node.js", icon: "server" },
+        { name: "Express", icon: "server" },
+        { name: "RESTful APIs", icon: "webhook" },
+        { name: "GraphQL", icon: "database" },
+        { name: "Firebase", icon: "flame" }
+      ]
     },
     { 
       title: "Tools & Methods", 
-      skills: ["Git", "GitHub", "CI/CD", "Agile", "Jest"] 
+      skills: [
+        { name: "Git", icon: "git-branch" },
+        { name: "GitHub", icon: "github" },
+        { name: "CI/CD", icon: "refresh-cw" },
+        { name: "Agile", icon: "trello" },
+        { name: "Jest", icon: "check-circle" }
+      ]
     },
     { 
       title: "Performance", 
-      skills: ["Web Vitals", "Lighthouse", "Optimization", "SEO", "Analytics"] 
+      skills: [
+        { name: "Web Vitals", icon: "activity" },
+        { name: "Lighthouse", icon: "lightbulb" },
+        { name: "Optimization", icon: "zap" },
+        { name: "SEO", icon: "search" },
+        { name: "Analytics", icon: "bar-chart" }
+      ]
     },
     {
       title: "Soft Skills",
-      skills: ["Communication", "Teamwork", "Problem Solving", "Time Management", "Adaptability"],
+      skills: [
+        { name: "Communication", icon: "message-circle" },
+        { name: "Teamwork", icon: "users" },
+        { name: "Problem Solving", icon: "puzzle" },
+        { name: "Time Management", icon: "clock" },
+        { name: "Adaptability", icon: "refresh-cw" }
+      ],
     },
   ],
 

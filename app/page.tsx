@@ -2,13 +2,14 @@
 
 import { useState, useEffect, Suspense } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, Code, ExternalLink, Github, Mail, Menu, Moon, Sun, X, ArrowUp } from "lucide-react"
+import { ChevronRight, Code, ExternalLink, Github, Mail, Menu, Moon, Sun, X, ArrowUp, CloudCog } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 import { TypingAnimation } from "@/components/typing-animation"
 import { siteConfig } from "@/config/site"
+import { IconMap } from "@/components/ui/iconMap"
 
 // Dynamically import the GeometryBackground component with no SSR
 const GeometryBackground = dynamic(() => import("@/components/geometry-background"), {
@@ -389,14 +390,14 @@ export default function Portfolio() {
                   key={index}
                   variants={fadeIn}
                   className="bg-card/80 hover:bg-card/90 backdrop-blur-sm border rounded-lg p-6 transition-all hover:shadow-lg"
-                  whileHover={{ y: -5 }}
+                  whileHover={{ y: -5, scale: 1.05 }}
                 >
                   <h3 className="text-xl font-bold mb-4">{category.title}</h3>
                   <ul className="space-y-2">
                     {category.skills.map((skill, skillIndex) => (
                       <li key={skillIndex} className="flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-primary"></div>
-                        <span>{skill}</span>
+                        <IconMap name={skill.name} className="h-4 w-4 text-primary" />
+                        <span className="text-sm">{skill.name}</span>
                       </li>
                     ))}
                   </ul>
