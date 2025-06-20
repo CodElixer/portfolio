@@ -21,7 +21,7 @@ A modern, responsive portfolio website built with Next.js 14, featuring a beauti
 
 Before you begin, ensure you have the following installed:
 - Node.js (v18.0.0 or higher)
-- npm or yarn
+- npm, yarn, or pnpm
 
 ## 🛠️ Installation
 
@@ -36,6 +36,8 @@ Before you begin, ensure you have the following installed:
    npm install
    # or
    yarn install
+   # or
+   pnpm install
    ```
 
 3. Run the development server:
@@ -43,6 +45,8 @@ Before you begin, ensure you have the following installed:
    npm run dev
    # or
    yarn dev
+   # or
+   pnpm dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
@@ -51,18 +55,16 @@ Before you begin, ensure you have the following installed:
 
 ### Configuration
 
-All website content can be customized through the `config/site.ts` file. This includes:
+All website content can be customized through the files in the `config/` directory. This includes:
 
-- Personal information
-- Navigation items
-- Skills and expertise
-- Projects
-- Contact information
-- Social media links
-- Footer content
+- Personal information (`config/site.ts`)
+- Navigation items, skills, projects, contact info, social links, and footer content (`config/site.ts`)
+- Multi-language support and strings (`config/languages/` and subfolders)
+- Language context (`contexts/language-context.tsx`)
 
 Example configuration:
 ```typescript
+// config/site.ts
 export const siteConfig = {
   name: "Your Name",
   title: "Your Title",
@@ -75,9 +77,9 @@ export const siteConfig = {
 
 The project uses Tailwind CSS for styling. You can customize the theme in the following files:
 
-- `app/globals.css` - Global styles and Tailwind directives
+- `app/globals.css` or `styles/globals.css` - Global styles and Tailwind directives
 - `components/ui/` - Reusable UI components
-- `config/site.ts` - Theme colors and other design tokens
+- `tailwind.config.ts` - Tailwind theme configuration
 
 ## 📁 Project Structure
 
@@ -90,13 +92,46 @@ portfolio-website-geometry/
 ├── components/            # React components
 │   ├── ui/               # Reusable UI components
 │   ├── geometry-background.tsx
+│   ├── language-switcher.tsx
+│   ├── theme-provider.tsx
 │   └── typing-animation.tsx
-├── config/               # Configuration files
-│   └── site.ts          # Site-wide configuration
-├── public/              # Static assets
-│   └── images/         # Image files
-├── styles/             # Additional styles
-└── package.json        # Project dependencies
+├── config/                # Configuration files
+│   ├── languages/        # Language-specific config
+│   │   ├── en/
+│   │   │   ├── site-strings.ts
+│   │   │   └── site.ts
+│   │   └── hi/
+│   │       ├── site-strings.ts
+│   │       └── site.ts
+│   ├── languages.ts
+│   ├── site-strings.ts
+│   └── site.ts
+├── contexts/              # React context providers
+│   └── language-context.tsx
+├── hooks/                 # Custom React hooks
+│   ├── use-mobile.tsx
+│   └── use-toast.ts
+├── lib/                   # Utility libraries
+│   └── utils.ts
+├── public/                # Static assets
+│   ├── assets/           # PDF and other assets
+│   │   └── Resume.pdf
+│   ├── favicon.svg
+│   ├── placeholder-logo.png
+│   ├── placeholder-logo.svg
+│   ├── placeholder-user.jpg
+│   ├── placeholder.jpg
+│   └── placeholder.svg
+├── styles/                # Additional styles
+│   └── globals.css
+├── utils/                 # Utility functions
+│   └── language-loader.ts
+├── next.config.mjs        # Next.js configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+├── tsconfig.json          # TypeScript configuration
+├── package.json           # Project dependencies
+├── README.md              # Project documentation
+└── ...                    # Other config and lock files
 ```
 
 ## 🚀 Deployment
@@ -142,11 +177,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📧 Contact
-
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
-
-Project Link: [https://github.com/yourusername/portfolio-website-geometry](https://github.com/yourusername/portfolio-website-geometry)
 
 ## 🙏 Acknowledgments
 

@@ -156,10 +156,10 @@ export const siteConfig = {
     github: "github.com/codelixer",
     website: "https://codelixer.github.io/portfolio/",
     socialLinks: {
-      twitter: "https://twitter.com",
-      linkedin: "https://linkedin.com",
-      dribbble: "https://dribbble.com",
-      instagram: "https://instagram.com"
+      // twitter: "https://twitter.com",
+      linkedin: "https://www.linkedin.com/in/yashkirti-raj/"
+      // dribbble: "https://dribbble.com",
+      // instagram: "https://instagram.com"
     }
   },
 
