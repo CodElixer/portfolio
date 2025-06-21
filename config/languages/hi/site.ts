@@ -1,15 +1,15 @@
 export const siteConfig = {
   name: "यशकीर्ति राज",
-  title: "फ्रंटएंड डेवलपर और UI/UX उत्साही",
-  description: "मैं तेज़, सुलभ और दृष्टिगत रूप से आकर्षक असाधारण डिजिटल अनुभव बनाता हूं।",
+  title: "फ्रंटएंड डेवलपर और UI/UX विशेषज्ञ",
+  description: "मैं तेज़, सुलभ और आकर्षक डिजिटल अनुभव बनाता हूं।",
   experience: "4+ वर्षों का अनुभव",
-  experienceDescription: "फ्रंटएंड डेवलपमेंट में",
+  experienceDescription: "फ्रंटएंड विकास में",
   
   // About Section
   about: {
     journey: [
-      "मैं एक जुनूनी फ्रंटएंड डेवलपर हूं जिसे सुंदर, कार्यात्मक और उपयोगकर्ता-केंद्रित डिजिटल अनुभव बनाने का 4+ वर्षों का अनुभव है। मैं हमेशा नई तकनीकों को सीखने और नवीनतम रुझानों पर अद्यतन रहने की कोशिश करता हूं।",
-      "डिज़ाइन और डेवलपमेंट दोनों की पृष्ठभूमि के साथ, मैं हर प्रोजेक्ट में एक अनूठा दृष्टिकोण लाता हूं। मैं स्वच्छ कोड, विचारशील इंटरैक्शन और उपयोगकर्ताओं को प्रसन्न करने वाले अनुभवों में विश्वास करता हूं।"
+      "मैं एक समर्पित फ्रंटएंड डेवलपर हूं जिसे सुंदर, कार्यात्मक और उपयोगकर्ता-केंद्रित डिजिटल अनुभव बनाने का 4+ वर्षों का अनुभव है। मैं निरंतर नई तकनीकें सीखने और नवीनतम रुझानों से अवगत रहने का प्रयास करता हूं।",
+      "डिज़ाइन और विकास दोनों की पृष्ठभूमि के साथ, मैं हर परियोजना में एक विशिष्ट दृष्टिकोण लाता हूं। मैं स्वच्छ कोड, सोची-समझी अंतःक्रियाओं और उपयोगकर्ताओं को प्रसन्न करने वाले अनुभवों में विश्वास रखता हूं।"
     ],
     personalInfo: {
       name: "यशकीर्ति राज",
@@ -25,7 +25,7 @@ export const siteConfig = {
   // Skills Section
   skills: [
     {
-      title: "फ्रंटएंड डेवलपमेंट",
+      title: "फ्रंटएंड विकास",
       skills: [
         { name: "React", icon: "code" },
         { name: "Next.js", icon: "next" },
@@ -39,9 +39,9 @@ export const siteConfig = {
       skills: [
         { name: "Figma", icon: "pen-tool" },
         { name: "Adobe XD", icon: "pen-tool" },
-        { name: "उपयोगकर्ता अनुसंधान", icon: "users" },
-        { name: "वायरफ्रेमिंग", icon: "layout" },
-        { name: "प्रोटोटाइपिंग", icon: "box" }
+        { name: "उपयोगकर्ता शोध", icon: "users" },
+        { name: "वायरफ्रेम बनाना", icon: "layout" },
+        { name: "प्रोटोटाइप बनाना", icon: "box" }
       ],
     },
     { 
@@ -55,7 +55,7 @@ export const siteConfig = {
       ]
     },
     { 
-      title: "टूल्स और मेथड्स", 
+      title: "उपकरण और विधियां", 
       skills: [
         { name: "Git", icon: "git-branch" },
         { name: "GitHub", icon: "github" },
@@ -67,21 +67,21 @@ export const siteConfig = {
     { 
       title: "प्रदर्शन", 
       skills: [
-        { name: "वेब वाइटल्स", icon: "activity" },
-        { name: "लाइटहाउस", icon: "lightbulb" },
-        { name: "ऑप्टिमाइजेशन", icon: "zap" },
+        { name: "Web Vitals", icon: "activity" },
+        { name: "Lighthouse", icon: "lightbulb" },
+        { name: "अनुकूलन", icon: "zap" },
         { name: "SEO", icon: "search" },
-        { name: "एनालिटिक्स", icon: "bar-chart" }
+        { name: "विश्लेषण", icon: "bar-chart" }
       ]
     },
     {
       title: "सॉफ्ट स्किल्स",
       skills: [
         { name: "संचार", icon: "message-circle" },
-        { name: "टीमवर्क", icon: "users" },
+        { name: "टीम वर्क", icon: "users" },
         { name: "समस्या समाधान", icon: "puzzle" },
         { name: "समय प्रबंधन", icon: "clock" },
-        { name: "अनुकूलनशीलता", icon: "refresh-cw" }
+        { name: "लचीलापन", icon: "refresh-cw" }
       ],
     },
   ],
@@ -90,7 +90,7 @@ export const siteConfig = {
   projects: [
     {
       title: "ई-कॉमर्स प्लेटफॉर्म",
-      description: "कार्ट, चेकआउट और पेमेंट इंटीग्रेशन के साथ एक पूर्ण विशेषताओं वाला ऑनलाइन स्टोर।",
+      description: "कार्ट, चेकआउट और भुगतान एकीकरण के साथ पूर्ण सुविधाओं वाला ऑनलाइन स्टोर।",
       image: "/placeholder.svg?height=300&width=400",
       tags: ["React", "Next.js", "Stripe", "Tailwind CSS"],
       links: {
@@ -100,17 +100,17 @@ export const siteConfig = {
     },
     {
       title: "पोर्टफोलियो वेबसाइट",
-      description: "गैलरी और कॉन्टैक्ट फॉर्म के साथ एक डिजिटल कलाकार के लिए आधुनिक पोर्टफोलियो वेबसाइट।",
+      description: "गैलरी और संपर्क फॉर्म के साथ डिजिटल कलाकार के लिए आधुनिक पोर्टफोलियो वेबसाइट।",
       image: "/placeholder.svg?height=300&width=400",
-      tags: ["Vue.js", "GSAP", "Firebase", "रेस्पॉन्सिव डिज़ाइन"],
+      tags: ["Vue.js", "GSAP", "Firebase", "प्रतिक्रियाशील डिज़ाइन"],
       links: {
         live: "https://example.com",
         github: "https://github.com"
       }
     },
     {
-      title: "टास्क मैनेजमेंट ऐप",
-      description: "ड्रैग-एंड-ड्रॉप इंटरफेस और रीयल-टाइम अपडेट के साथ एक प्रोडक्टिविटी ऐप।",
+      title: "कार्य प्रबंधन ऐप",
+      description: "ड्रैग-एंड-ड्रॉप इंटरफेस और वास्तविक समय अपडेट के साथ उत्पादकता ऐप।",
       image: "/placeholder.svg?height=300&width=400",
       tags: ["React", "TypeScript", "Redux", "Node.js"],
       links: {
@@ -119,10 +119,10 @@ export const siteConfig = {
       }
     },
     {
-      title: "ट्रैवल ब्लॉग",
-      description: "रिच मीडिया सपोर्ट और कमेंटिंग सिस्टम के साथ एक कंटेंट-फोकस्ड ब्लॉग।",
+      title: "यात्रा ब्लॉग",
+      description: "समृद्ध मीडिया समर्थन और टिप्पणी प्रणाली के साथ सामग्री-केंद्रित ब्लॉग।",
       image: "/placeholder.svg?height=300&width=400",
-      tags: ["Next.js", "CMS", "रेस्पॉन्सिव", "SEO ऑप्टिमाइज्ड"],
+      tags: ["Next.js", "CMS", "प्रतिक्रियाशील", "SEO अनुकूलित"],
       links: {
         live: "https://example.com",
         github: "https://github.com"
@@ -130,9 +130,9 @@ export const siteConfig = {
     },
     {
       title: "फिटनेस ट्रैकर",
-      description: "डेटा विज़ुअलाइजेशन के साथ वर्कआउट और न्यूट्रिशन ट्रैकिंग के लिए एक मोबाइल-फर्स्ट वेब ऐप।",
+      description: "डेटा विज़ुअलाइजेशन के साथ कसरत और पोषण ट्रैकिंग के लिए मोबाइल-पहले वेब ऐप।",
       image: "/placeholder.svg?height=300&width=400",
-      tags: ["React Native", "Chart.js", "API इंटीग्रेशन"],
+      tags: ["React Native", "Chart.js", "API एकीकरण"],
       links: {
         live: "https://example.com",
         github: "https://github.com"
@@ -140,9 +140,9 @@ export const siteConfig = {
     },
     {
       title: "रियल एस्टेट प्लेटफॉर्म",
-      description: "सर्च, फिल्टरिंग और मैप इंटीग्रेशन के साथ प्रॉपर्टी लिस्टिंग वेबसाइट।",
+      description: "खोज, फ़िल्टरिंग और मानचित्र एकीकरण के साथ संपत्ति सूची वेबसाइट।",
       image: "/placeholder.svg?height=300&width=400",
-      tags: ["Next.js", "Google Maps API", "फिल्टरिंग", "प्रमाणीकरण"],
+      tags: ["Next.js", "Google Maps API", "फ़िल्टरिंग", "प्रमाणीकरण"],
       links: {
         live: "https://example.com",
         github: "https://github.com"
@@ -167,8 +167,8 @@ export const siteConfig = {
   navigation: [
     { id: "home", label: "होम" },
     { id: "about", label: "परिचय" },
-    { id: "skills", label: "कौशल" },
-    { id: "projects", label: "प्रोजेक्ट्स" },
+    { id: "skills", label: "विशेषताएं" },
+    { id: "projects", label: "परियोजनाएं" },
     { id: "contact", label: "संपर्क" },
   ],
 

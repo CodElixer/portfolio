@@ -46,17 +46,66 @@ const skillIconMap: Record<string, keyof typeof icons> = {
   "Adaptability": "RefreshCw",
 };
 
+// Multi-language skill name mapping to English equivalents
+const skillNameMapping: Record<string, string> = {
+  // Hindi translations
+  "उपयोगकर्ता शोध": "User Research",
+  "वायरफ्रेम बनाना": "Wireframing",
+  "प्रोटोटाइप बनाना": "Prototyping",
+  "APIs RESTful": "RESTful APIs",
+  "अनुकूलन": "Optimization",
+  "विश्लेषण": "Analytics",
+  "संचार": "Communication",
+  "टीम वर्क": "Teamwork",
+  "समस्या समाधान": "Problem Solving",
+  "समय प्रबंधन": "Time Management",
+  "लचीलापन": "Adaptability",
+  "एजाइल": "Agile",
+
+  // German translations
+  "Benutzerforschung": "User Research",
+  "Prototypage": "Prototyping",
+  "Optimierung": "Optimization",
+  "Kommunikation": "Communication",
+  "Teamarbeit": "Teamwork",
+  "Problemlösung": "Problem Solving",
+  "Zeitmanagement": "Time Management",
+  "Anpassungsfähigkeit": "Adaptability",
+
+  // French translations
+  "Recherche utilisateur": "User Research",
+  "Optimisation": "Optimization",
+  "Travail d'équipe": "Teamwork",
+  "Résolution de problèmes": "Problem Solving",
+  "Gestion du temps": "Time Management",
+  "Adaptabilité": "Adaptability",
+
+  // Irish translations
+  "Taighde úsáideoir": "User Research",
+  "Prótaclónú": "Prototyping",
+  "Optamú": "Optimization",
+  "Anailís": "Analytics",
+  "Cumarsáid": "Communication",
+  "Obair foirne": "Teamwork",
+  "Réiteach fadhbanna": "Problem Solving",
+  "Bainistíocht ama": "Time Management",
+  "Inoiriúnacht": "Adaptability",
+};
+
 interface IconMapProps extends SVGProps<SVGSVGElement> {
   name: keyof typeof icons | keyof typeof skillIconMap;
 }
 
 export const IconMap = ({ name, ...props }: IconMapProps) => {
-  // If the name is a skill name, get the corresponding icon name
-  const iconName = skillIconMap[name] || name;
+  // First, try to map the skill name to its English equivalent
+  const englishSkillName = skillNameMapping[name] || name;
+  
+  // Then get the corresponding icon name
+  const iconName = skillIconMap[englishSkillName] || englishSkillName;
   const Icon = icons[iconName as keyof typeof icons] as LucideIcon;
   
   if (!Icon) {
-    console.warn(`Icon not found for name: ${name}`);
+    console.warn(`Icon not found for name: ${name} (mapped to: ${englishSkillName})`);
     return null;
   }
 

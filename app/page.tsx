@@ -138,6 +138,9 @@ export default function Portfolio() {
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
+            {/* Mobile Language Selector */}
+            <LanguageSwitcher currentLanguage={language} onLanguageChange={setLanguage} />
+            
             {mounted && (
               <Button
                 variant="ghost"

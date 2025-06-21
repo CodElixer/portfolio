@@ -9,9 +9,9 @@ export const siteStrings = {
 
   // Hero Section
   hero: {
-    greeting: "नमस्ते, मैं हूं",
+    greeting: "नमस्कार, मैं हूं",
     getInTouch: "संपर्क करें",
-    viewWork: "मेरा काम देखें"
+    viewWork: "मेरे कार्य देखें"
   },
 
   // About Section
@@ -30,21 +30,21 @@ export const siteStrings = {
 
   // Skills Section
   skills: {
-    title: "मेरे कौशल",
-    description: "मैंने वेब डेवलपमेंट की दुनिया में विभिन्न तकनीकों के साथ काम किया है। यहां मेरे मुख्य क्षेत्र हैं:"
+    title: "मेरी विशेषताएं",
+    description: "मैंने वेब विकास के क्षेत्र में विभिन्न तकनीकों के साथ कार्य किया है। यहां मेरे मुख्य क्षेत्र हैं:"
   },
 
   // Projects Section
   projects: {
-    title: "प्रमुख प्रोजेक्ट्स",
-    description: "यहां मेरे कुछ हाल के प्रोजेक्ट्स हैं। प्रत्येक प्रोजेक्ट अद्वितीय है और विभिन्न कौशल और तकनीकों को प्रदर्शित करता है।",
+    title: "मुख्य परियोजनाएं",
+    description: "यहां मेरी कुछ हाल की परियोजनाएं हैं। प्रत्येक परियोजना विशिष्ट है और विभिन्न कौशल और तकनीकों को प्रदर्शित करती है।",
     viewMore: "GitHub पर और देखें"
   },
 
   // Contact Section
   contact: {
     title: "संपर्क करें",
-    description: "क्या आपके पास कोई प्रोजेक्ट है या संभावित अवसरों पर चर्चा करना चाहते हैं? बेझिझक संपर्क करें!",
+    description: "क्या आपके पास कोई परियोजना है या संभावित अवसरों पर चर्चा करना चाहते हैं? बेझिझक संपर्क करें!",
     info: {
       title: "संपर्क जानकारी",
       email: "ईमेल",
@@ -60,15 +60,15 @@ export const siteStrings = {
       },
       email: {
         label: "ईमेल",
-        placeholder: "आपका ईमेल"
+        placeholder: "आपका ईमेल पता"
       },
       subject: {
         label: "विषय",
-        placeholder: "विषय"
+        placeholder: "संदेश का विषय"
       },
       message: {
         label: "संदेश",
-        placeholder: "आपका संदेश"
+        placeholder: "आपका संदेश यहां लिखें"
       },
       submit: "संदेश भेजें"
     }

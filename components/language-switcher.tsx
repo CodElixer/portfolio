@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Globe } from "lucide-react"
 import { languages, type LanguageCode } from "@/config/languages"
@@ -12,9 +12,26 @@ interface LanguageSwitcherProps {
 
 export function LanguageSwitcher({ currentLanguage, onLanguageChange }: LanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <Button
         variant="ghost"
         size="icon"
@@ -26,7 +43,7 @@ export function LanguageSwitcher({ currentLanguage, onLanguageChange }: Language
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-background border">
+        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-background border z-50">
           <div className="py-1" role="menu" aria-orientation="vertical">
             {Object.entries(languages).map(([code, lang]) => (
               <button
