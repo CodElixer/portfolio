@@ -16,7 +16,7 @@ export const siteConfig = {
       email: "yashkirtiraj10@gmail.com",
       availability: "फ्रीलांस / पूर्णकालिक",
       resume: {
-        path: "/assets/Resume.pdf",
+        path: "assets/Resume.pdf",
         filename: "Resume.pdf"
       }
     }
