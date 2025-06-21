@@ -3,7 +3,6 @@ import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/contexts/language-context"
-import { StagewiseToolbar } from '@stagewise/toolbar-next'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,10 +17,6 @@ export const metadata = {
     shortcut: `${basePath}/favicon.svg`,
     apple: `${basePath}/favicon.svg`,
   },
-}
-
-const stagewiseConfig = {
-  plugins: []
 }
 
 export default function RootLayout({
@@ -44,9 +39,6 @@ export default function RootLayout({
           <LanguageProvider>
             {children}
           </LanguageProvider>
-          {process.env.NODE_ENV === 'development' && (
-            <StagewiseToolbar config={stagewiseConfig} />
-          )}
         </ThemeProvider>
       </body>
     </html>
